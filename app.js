@@ -9,27 +9,27 @@
 
 const BUTTONS = [
   // ── Row 1 ──────────────────────────────────────────────
-  { id: 1,  label: "University Portal",    icon: "🎓", color: "blue",    url: "" },
+  { id: 1,  label: "Micro LIS",    icon: "🎓", color: "blue",    url: "https://microbiologycchrc.github.io/sec-1/" },
   { id: 2,  label: "Department Website",   icon: "🧫", color: "emerald", url: "" },
   { id: 3,  label: "Student LMS",          icon: "📚", color: "purple",  url: "" },
   { id: 4,  label: "Email / Webmail",      icon: "📧", color: "red",     url: "" },
 
   // ── Row 2 ──────────────────────────────────────────────
-  { id: 5,  label: "PubMed / NCBI",        icon: "📄", color: "sky",     url: "www.facebook.com" },
-  { id: 6,  label: "Google Scholar",       icon: "🎓", color: "yellow",  url: "https://scholar.google.com" },
-  { id: 7,  label: "ASM Journals",         icon: "🧬", color: "green",   url: "https://journals.asm.org" },
-  { id: 8,  label: "ResearchGate",         icon: "🔗", color: "teal",    url: "https://www.researchgate.net" },
+  { id: 5,  label: "PubMed / NCBI",        icon: "📄", color: "sky",     url: "" },
+  { id: 6,  label: "Google Scholar",       icon: "🎓", color: "yellow",  url: "" },
+  { id: 7,  label: "ASM Journals",         icon: "🧬", color: "green",   url: "" },
+  { id: 8,  label: "ResearchGate",         icon: "🔗", color: "teal",    url: "" },
 
   // ── Row 3 ──────────────────────────────────────────────
-  { id: 9,  label: "ScienceDirect",        icon: "📰", color: "orange",  url: "https://www.sciencedirect.com" },
-  { id: 10, label: "NCBI BLAST",           icon: "🧪", color: "indigo",  url: "https://blast.ncbi.nlm.nih.gov" },
-  { id: 11, label: "ATCC",                 icon: "🦠", color: "pink",    url: "https://www.atcc.org" },
-  { id: 12, label: "UniProt",              icon: "🔬", color: "lime",    url: "https://www.uniprot.org" },
+  { id: 9,  label: "ScienceDirect",        icon: "📰", color: "orange",  url: "" },
+  { id: 10, label: "NCBI BLAST",           icon: "🧪", color: "indigo",  url: "" },
+  { id: 11, label: "ATCC",                 icon: "🦠", color: "pink",    url: "" },
+  { id: 12, label: "UniProt",              icon: "🔬", color: "lime",    url: "" },
 
   // ── Row 4 ──────────────────────────────────────────────
-  { id: 13, label: "KEGG Pathways",        icon: "🗺️", color: "cyan",    url: "https://www.kegg.jp" },
-  { id: 14, label: "Sigma-Aldrich",        icon: "⚗️", color: "amber",   url: "https://www.sigmaaldrich.com" },
-  { id: 15, label: "Google Drive",         icon: "📁", color: "yellow",  url: "https://drive.google.com" },
+  { id: 13, label: "KEGG Pathways",        icon: "🗺️", color: "cyan",    url: "" },
+  { id: 14, label: "Sigma-Aldrich",        icon: "⚗️", color: "amber",   url: "" },
+  { id: 15, label: "Google Drive",         icon: "📁", color: "yellow",  url: "" },
   { id: 16, label: "Google Meet",          icon: "📹", color: "green",   url: "" },
 
   // ── Row 5 ──────────────────────────────────────────────
