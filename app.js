@@ -9,7 +9,7 @@
 
 const BUTTONS = [
   // ── Row 1 ──────────────────────────────────────────────
-  { id: 1,  label: "Micro LIS",    icon: "🎓", color: "blue",    url: https://microbiologycchrc.github.io/sec-1/},
+  { id: 1,  label: "Micro LIS",    icon: "🎓", color: "blue",    url: "https://microbiologycchrc.github.io/sec-1/"},
   { id: 2,  label: "Department Website",   icon: "🧫", color: "emerald", url: "" },
   { id: 3,  label: "Student LMS",          icon: "📚", color: "purple",  url: "" },
   { id: 4,  label: "Email / Webmail",      icon: "📧", color: "red",     url: "" },
