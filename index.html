@@ -1,184 +1,1006 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Microbiology Department Dashboard</title>
-  <script>
-    if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-      document.documentElement.classList.add('dark');
-    }
-  </script>
-  <script src="https://cdn.tailwindcss.com/3.4.1"></script>
-  <script>tailwind.config = { darkMode: 'class' }</script>
-  <style>
-    .btn-card {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 0.55rem;
-      padding: 1.2rem 0.75rem;
-      background: #ffffff;
-      border-radius: 1rem;
-      cursor: pointer;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
-      text-align: center;
-      width: 100%;
-      border: 1.5px solid #e5e7eb;
-      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
-      user-select: none;
-    }
-    .dark .btn-card { background: #111827; border-color: #1f2937; }
-    .btn-card:hover  { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(5,150,105,0.15); border-color: #6ee7b7; background: #f0fdf4; }
-    .dark .btn-card:hover { border-color: #065f46; box-shadow: 0 8px 24px rgba(16,185,129,0.18); background: #0d1f17; }
-    .btn-card:active { transform: scale(0.97); }
-    .btn-icon {
-      width: 3rem; height: 3rem; border-radius: 0.75rem;
-      display: flex; align-items: center; justify-content: center; font-size: 1.5rem;
-    }
-    .btn-label {
-      font-size: 0.82rem; font-weight: 600;
-      color: #111827; line-height: 1.3; word-break: break-word;
-    }
-    .dark .btn-label { color: #f3f4f6; }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Microbiology Department – Quick Launch</title>
+    <link rel="icon" href="favicon.ico" />
+    <!-- Google Font: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet" />
+
+    <script>
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+        }
+    </script>
+    <script src="https://cdn.tailwindcss.com/3.4.1">
+    </script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* ── Reset & base ── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            background: #f1f5f9;
+            color: #0f172a;
+            transition: background 0.3s, color 0.3s;
+        }
+        .dark body {
+            background: #0b1120;
+            color: #f1f5f9;
+        }
+
+        #app {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+        }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 8px;
+        }
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155;
+        }
+
+        /* ── Header ── */
+        header {
+            flex-shrink: 0;
+            background: linear-gradient(135deg, #065f46 0%, #022c22 100%);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.4rem;
+            z-index: 10;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+        }
+        .dark header {
+            background: linear-gradient(135deg, #022c22 0%, #011a14 100%);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .header-left .icon-big {
+            font-size: 1.6rem;
+            line-height: 1;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+        }
+        .header-title h1 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            letter-spacing: -0.025em;
+            margin: 0;
+            line-height: 1.2;
+        }
+        .header-title p {
+            font-size: 0.6rem;
+            color: #a7f3d0;
+            margin: 0;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .dark-toggle {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 9999px;
+            width: 2.2rem;
+            height: 2.2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.15s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            backdrop-filter: blur(4px);
+        }
+        .dark-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(1.05);
+        }
+        .dark-toggle:active {
+            transform: scale(0.95);
+        }
+
+        /* ── Button scroll area ── */
+        #btn-scroll {
+            flex-shrink: 0;
+            overflow-x: auto;
+            overflow-y: hidden;
+            padding: 0.6rem 1rem 0.4rem;
+            background: rgba(241, 245, 249, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.6);
+            transition: background 0.3s, border-color 0.3s;
+            position: relative;
+            z-index: 5;
+        }
+        .dark #btn-scroll {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border-bottom-color: rgba(30, 41, 59, 0.6);
+        }
+
+        #btn-grid {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: nowrap;
+            min-width: max-content;
+            padding-bottom: 0.2rem;
+        }
+
+        .btn-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 0.2rem;
+            padding: 0.5rem 0.7rem;
+            min-width: 70px;
+            max-width: 88px;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-radius: 0.9rem;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            text-align: center;
+            border: 1.5px solid rgba(229, 231, 235, 0.6);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s, border-color 0.2s, background 0.2s;
+            user-select: none;
+            flex-shrink: 0;
+            position: relative;
+        }
+        .dark .btn-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-color: rgba(51, 65, 85, 0.6);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+        .btn-card:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 10px 28px rgba(5, 150, 105, 0.15);
+            border-color: #6ee7b7;
+            background: rgba(240, 253, 244, 0.8);
+        }
+        .dark .btn-card:hover {
+            border-color: #065f46;
+            box-shadow: 0 10px 28px rgba(16, 185, 129, 0.18);
+            background: rgba(13, 31, 23, 0.8);
+        }
+        .btn-card:active {
+            transform: scale(0.95);
+        }
+        .btn-card .btn-icon {
+            width: 2.2rem;
+            height: 2.2rem;
+            border-radius: 0.6rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+            transition: transform 0.2s;
+        }
+        .btn-card:hover .btn-icon {
+            transform: scale(1.05);
+        }
+        .btn-card .btn-label {
+            font-size: 0.55rem;
+            font-weight: 600;
+            color: #0f172a;
+            line-height: 1.2;
+            word-break: break-word;
+            max-width: 100%;
+            transition: color 0.2s;
+        }
+        .dark .btn-card .btn-label {
+            color: #f1f5f9;
+        }
+        .btn-card:hover .btn-label {
+            color: #065f46;
+        }
+        .dark .btn-card:hover .btn-label {
+            color: #6ee7b7;
+        }
+
+        .btn-card.active {
+            border-color: #059669;
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.25), 0 8px 20px rgba(5, 150, 105, 0.12);
+            background: rgba(236, 253, 245, 0.9);
+            transform: translateY(-2px);
+        }
+        .dark .btn-card.active {
+            border-color: #34d399;
+            box-shadow: 0 0 0 3px rgba(52, 211, 153, 0.2), 0 8px 20px rgba(16, 185, 129, 0.15);
+            background: rgba(13, 31, 23, 0.9);
+        }
+        .btn-card.active .btn-label {
+            color: #065f46;
+        }
+        .dark .btn-card.active .btn-label {
+            color: #6ee7b7;
+        }
+
+        /* ── Empty state ── */
+        #empty-msg {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            text-align: center;
+            color: #94a3b8;
+            width: 100%;
+        }
+        .dark #empty-msg {
+            color: #475569;
+        }
+        #empty-msg .big {
+            font-size: 2rem;
+            margin-bottom: 0.2rem;
+        }
+        #empty-msg p {
+            margin: 0;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        #empty-msg .sub {
+            font-size: 0.65rem;
+            opacity: 0.7;
+        }
+
+        /* ── Main content (empty space) ── */
+        #main-content {
+            flex: 1 1 0;
+            min-height: 0;
+            background: #ffffff;
+            transition: background 0.3s;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+        .dark #main-content {
+            background: #0b1120;
+        }
+        #main-content .welcome {
+            text-align: center;
+            max-width: 400px;
+        }
+        #main-content .welcome .big-icon {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 4px 12px rgba(5, 150, 105, 0.2));
+        }
+        #main-content .welcome h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0f172a;
+            margin: 0;
+        }
+        .dark #main-content .welcome h2 {
+            color: #f1f5f9;
+        }
+        #main-content .welcome p {
+            font-size: 0.85rem;
+            color: #64748b;
+            margin-top: 0.3rem;
+        }
+        .dark #main-content .welcome p {
+            color: #94a3b8;
+        }
+        #main-content .welcome .hint-arrow {
+            font-size: 1.4rem;
+            margin-top: 0.6rem;
+            animation: bounce-arrow 1.8s infinite;
+        }
+        @keyframes bounce-arrow {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(6px);
+            }
+        }
+
+        /* ── Footer ── */
+        footer {
+            flex-shrink: 0;
+            text-align: center;
+            font-size: 0.55rem;
+            font-weight: 500;
+            color: #94a3b8;
+            padding: 0.3rem 1rem;
+            background: rgba(241, 245, 249, 0.6);
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+            border-top: 1px solid rgba(226, 232, 240, 0.4);
+            transition: background 0.3s, border-color 0.3s, color 0.3s;
+            letter-spacing: 0.02em;
+        }
+        .dark footer {
+            background: rgba(15, 23, 42, 0.6);
+            border-top-color: rgba(30, 41, 59, 0.4);
+            color: #64748b;
+        }
+
+        /* ── Colour map ── */
+        .bg-blue {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+        .dark .bg-blue {
+            background: #1e3a5f;
+            color: #60a5fa;
+        }
+        .bg-emerald {
+            background: #d1fae5;
+            color: #059669;
+        }
+        .dark .bg-emerald {
+            background: #064e3b;
+            color: #34d399;
+        }
+        .bg-purple {
+            background: #ede9fe;
+            color: #7c3aed;
+        }
+        .dark .bg-purple {
+            background: #2e1a47;
+            color: #a78bfa;
+        }
+        .bg-red {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+        .dark .bg-red {
+            background: #4a1a1a;
+            color: #f87171;
+        }
+        .bg-sky {
+            background: #e0f2fe;
+            color: #0284c7;
+        }
+        .dark .bg-sky {
+            background: #0a2a3a;
+            color: #38bdf8;
+        }
+        .bg-yellow {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .dark .bg-yellow {
+            background: #4a3a0a;
+            color: #fbbf24;
+        }
+        .bg-green {
+            background: #dcfce7;
+            color: #16a34a;
+        }
+        .dark .bg-green {
+            background: #0a3a1a;
+            color: #4ade80;
+        }
+        .bg-teal {
+            background: #ccfbf1;
+            color: #0d9488;
+        }
+        .dark .bg-teal {
+            background: #0a3a34;
+            color: #2dd4bf;
+        }
+        .bg-orange {
+            background: #ffedd5;
+            color: #ea580c;
+        }
+        .dark .bg-orange {
+            background: #4a2a0a;
+            color: #fb923c;
+        }
+        .bg-indigo {
+            background: #e0e7ff;
+            color: #4f46e5;
+        }
+        .dark .bg-indigo {
+            background: #1a1a4a;
+            color: #818cf8;
+        }
+        .bg-pink {
+            background: #fce7f3;
+            color: #db2777;
+        }
+        .dark .bg-pink {
+            background: #4a1a2a;
+            color: #f472b6;
+        }
+        .bg-lime {
+            background: #ecfccb;
+            color: #65a30d;
+        }
+        .dark .bg-lime {
+            background: #2a3a0a;
+            color: #a3e635;
+        }
+        .bg-cyan {
+            background: #cffafe;
+            color: #0891b2;
+        }
+        .dark .bg-cyan {
+            background: #0a2a3a;
+            color: #22d3ee;
+        }
+        .bg-amber {
+            background: #fef3c7;
+            color: #d97706;
+        }
+        .dark .bg-amber {
+            background: #4a3a0a;
+            color: #fbbf24;
+        }
+        .bg-gray {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+        .dark .bg-gray {
+            background: #1f2937;
+            color: #9ca3af;
+        }
+
+        /* ── FLOATING ANALOG CLOCK ── */
+        #floating-clock {
+            position: fixed;
+            bottom: 80px;
+            right: 20px;
+            z-index: 999;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border-radius: 50%;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15), 0 0 0 1px rgba(255, 255, 255, 0.6) inset, 0 0 0 2px rgba(5, 150, 105, 0.12);
+            padding: 10px;
+            transition: background 0.3s, box-shadow 0.3s, border-color 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            width: 95px;
+            height: 95px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none;
+        }
+        .dark #floating-clock {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05) inset, 0 0 0 2px rgba(16, 185, 129, 0.2);
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+        #floating-clock canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 480px) {
+            header {
+                padding: 0.4rem 0.8rem;
+            }
+            .header-title h1 {
+                font-size: 0.95rem;
+            }
+            .header-left .icon-big {
+                font-size: 1.3rem;
+            }
+            .dark-toggle {
+                width: 1.8rem;
+                height: 1.8rem;
+                font-size: 0.8rem;
+            }
+            #btn-scroll {
+                padding: 0.4rem 0.5rem 0.3rem;
+            }
+            .btn-card {
+                min-width: 58px;
+                padding: 0.35rem 0.4rem;
+                gap: 0.15rem;
+            }
+            .btn-card .btn-icon {
+                width: 1.6rem;
+                height: 1.6rem;
+                font-size: 0.9rem;
+            }
+            .btn-card .btn-label {
+                font-size: 0.45rem;
+            }
+            #btn-grid {
+                gap: 0.3rem;
+            }
+            footer {
+                font-size: 0.45rem;
+                padding: 0.15rem 0.5rem;
+            }
+            #floating-clock {
+                width: 70px !important;
+                height: 70px !important;
+                bottom: 60px !important;
+                right: 8px !important;
+                padding: 6px !important;
+            }
+            #floating-clock canvas {
+                width: 70px !important;
+                height: 70px !important;
+            }
+            #main-content .welcome .big-icon {
+                font-size: 3rem;
+            }
+            #main-content .welcome h2 {
+                font-size: 1rem;
+            }
+            #main-content .welcome p {
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (min-width: 481px) and (max-width: 768px) {
+            .btn-card {
+                min-width: 66px;
+                padding: 0.4rem 0.5rem;
+            }
+            .btn-card .btn-icon {
+                width: 1.8rem;
+                height: 1.8rem;
+                font-size: 1rem;
+            }
+            .btn-card .btn-label {
+                font-size: 0.5rem;
+            }
+            #floating-clock {
+                width: 85px !important;
+                height: 85px !important;
+                bottom: 70px !important;
+                right: 14px !important;
+                padding: 8px !important;
+            }
+            #floating-clock canvas {
+                width: 85px !important;
+                height: 85px !important;
+            }
+        }
+
+        @media (min-width: 769px) {
+            .btn-card {
+                min-width: 82px;
+                padding: 0.6rem 0.8rem;
+            }
+            .btn-card .btn-icon {
+                width: 2.4rem;
+                height: 2.4rem;
+                font-size: 1.3rem;
+            }
+            .btn-card .btn-label {
+                font-size: 0.6rem;
+            }
+            #floating-clock {
+                width: 105px !important;
+                height: 105px !important;
+                bottom: 85px !important;
+                right: 22px !important;
+                padding: 11px !important;
+            }
+            #floating-clock canvas {
+                width: 105px !important;
+                height: 105px !important;
+            }
+        }
+
+        /* ── URL Connection Status Badge ── */
+        .url-status {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid white;
+            background: #22c55e;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            transition: transform 0.2s;
+        }
+        .dark .url-status {
+            border-color: #1e293b;
+        }
+        .btn-card:hover .url-status {
+            transform: scale(1.2);
+        }
+        .url-status.inactive {
+            background: #94a3b8;
+        }
+
+        /* ── Background decoration ── */
+        #app::before {
+            content: '';
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 30% 20%, rgba(16, 185, 129, 0.03) 0%, transparent 60%),
+                radial-gradient(circle at 70% 80%, rgba(5, 150, 105, 0.02) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: 0;
+        }
+        .dark #app::before {
+            background: radial-gradient(circle at 30% 20%, rgba(16, 185, 129, 0.05) 0%, transparent 60%),
+                radial-gradient(circle at 70% 80%, rgba(5, 150, 105, 0.03) 0%, transparent 50%);
+        }
+        header,
+        #btn-scroll,
+        #main-content,
+        footer {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ── Connection hint ── */
+        .connection-hint {
+            font-size: 0.55rem;
+            color: #94a3b8;
+            padding: 0.1rem 0.6rem;
+            background: rgba(0, 0, 0, 0.04);
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            white-space: nowrap;
+        }
+        .dark .connection-hint {
+            background: rgba(255, 255, 255, 0.04);
+            color: #64748b;
+        }
+        .connection-hint .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+            background: #22c55e;
+            animation: pulse-dot 2s infinite;
+        }
+        .connection-hint .dot.idle {
+            background: #94a3b8;
+            animation: none;
+        }
+        @keyframes pulse-dot {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+        }
+    </style>
 </head>
-<body class="min-h-screen bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 transition-colors duration-300">
 
-  <!-- ── Header ───────────────────────────────────────── -->
-  <header class="bg-emerald-800 dark:bg-emerald-950 shadow-lg">
-    <div class="max-w-6xl mx-auto px-4 py-5 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <div class="text-4xl">🦠</div>
-        <div>
-          <h1 class="text-2xl sm:text-3xl font-bold text-white tracking-tight">Microbiology Department</h1>
-          <p class="text-emerald-200 text-sm mt-0.5">Quick Access Dashboard</p>
+<body>
+
+    <div id="app">
+
+        <!-- ═══ HEADER ═══ -->
+        <header>
+            <div class="header-left">
+                <span class="icon-big">🦠</span>
+                <div class="header-title">
+                    <h1>Microbiology Department</h1>
+                    <p>Quick Launch Portal</p>
+                </div>
+            </div>
+            <div class="header-right">
+                <span class="connection-hint">
+                    <span class="dot idle" id="status-dot"></span>
+                    <span id="conn-status">Ready</span>
+                </span>
+                <button class="dark-toggle" onclick="toggleDark()" title="Toggle dark mode">
+                    <span id="dark-icon">🌙</span>
+                </button>
+            </div>
+        </header>
+
+        <!-- ═══ BUTTON SCROLL ═══ -->
+        <div id="btn-scroll">
+            <div id="btn-grid"></div>
+            <div id="empty-msg">
+                <span class="big">🔗</span>
+                <p>No buttons configured</p>
+                <span class="sub">Add a URL in the BUTTONS list to show it here.</span>
+            </div>
         </div>
-      </div>
-      <div class="flex items-center gap-2">
-        <span id="clock" class="text-emerald-100 text-sm font-mono bg-emerald-900 px-3 py-1.5 rounded-full"></span>
-        <button onclick="toggleDark()" class="p-2 rounded-full bg-emerald-700 hover:bg-emerald-600 text-white transition" title="Toggle dark mode">
-          <span id="dark-icon">🌙</span>
-        </button>
-      </div>
+
+        <!-- ═══ MAIN CONTENT (welcome message) ═══ -->
+        <div id="main-content">
+            <div class="welcome">
+                <div class="big-icon">🔬</div>
+                <h2>Select a resource to launch</h2>
+                <p>Click any button above to open the link in this tab</p>
+                <div class="hint-arrow">👆</div>
+            </div>
+        </div>
+
+        <!-- ═══ FOOTER ═══ -->
+        <footer>
+            Microbiology Department &nbsp;·&nbsp; Thank you for visiting our website. We sincerely appreciate your interest and welcome the opportunity to serve you.
+        </footer>
+
+        <!-- ═══ FLOATING ANALOG CLOCK ═══ -->
+        <div id="floating-clock">
+            <canvas id="analog-canvas" width="200" height="200"></canvas>
+        </div>
+
     </div>
-  </header>
 
-  <!-- ── Button Grid ──────────────────────────────────── -->
-  <main class="max-w-6xl mx-auto px-4 py-8">
-    <div id="btn-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
+    <!-- ════════════════════════════════════════════════════════════
+         ✏️  EDIT YOUR BUTTONS & URL CONNECTIONS HERE
+         ─────────────────────────────────────────────────────────────
+         • url: ""            →  button is AUTO-HIDDEN
+         • url: "https://…"  →  button SHOWS & opens in same tab on click
+         ════════════════════════════════════════════════════════════ -->
+    <script>
+        // ── 🔗 URL CONNECTIONS ──────────────────────────────────────
+        // Add your links here. Only buttons with a non-empty URL will appear.
+        const BUTTONS = [
+            { id: 1, label: "MicroLab Inventory", icon: "🌏", color: "blue", url: "https://script.google.com/macros/s/AKfycby5aa86hdeg1qcH5wZFiXL9oCLzUk1HE20Q_y658ZjQYaf0RuSFSWxoD7I1lO2iN8RA/exec" },
+            { id: 2, label: "Micro LIS 2026", icon: "🌏", color: "emerald", url: "https://script.google.com/macros/s/AKfycbwFzrc-L4M5Fiqj-kUxlyIfccgFB0lp-4kYI59zgFCg8SdioJX2R_2OhXGVHeCwvw0/exec" },
+            { id: 3, label: "Micro LIS 2025", icon: "🌏", color: "purple", url: "https://script.google.com/macros/s/AKfycbxhyKAtCGxhmmbEhXA9KDUhKvoRNcQL4Y6_O_ROppXlblroK3LNKsQct8RMwkpm2NjbGA/exec" },
+            { id: 4, label: "Micro LIS 2024", icon: "🌏", color: "red", url: "https://script.google.com/macros/s/AKfycbycT0df7SUQPm7GM608Yh8ec5gMq--5J-upEGEspwuYbkUT77-gNzg80Lz16-LDO8OV/exec" },
+            // ✅ ACTIVE — opens in same tab
+            { id: 5, label: "Micro LIS 2023", icon: "🌏", color: "sky", url: "https://script.google.com/macros/s/AKfycby3t0gIP722jpkn2KF54sYBMUXNDoEtjOLEolcxL_FV4uaeAGTKOv15bZH4IVBAq7BD/exec" },
+            // ✅ ACTIVE — opens in same tab
+            { id: 6, label: "Micro LIS 2022", icon: "🌏", color: "yellow", url: "https://script.google.com/macros/s/AKfycbwaFOcqSRkw6Bqcb6pMVhRREKMYfXthC9edMGIVQA1UYT5IfEpKYC1DJCQK0kUadkY8uQ/exec" },
+            { id: 7, label: "Micro LIS 2021", icon: "🌏", color: "green", url: "https://script.google.com/macros/s/AKfycbyLomEwTzen6A8RPWU5-MPnu12oKW1DwmXLKHZ5CMOvp31jI58HbLpxcjJ-yJb8jcNt/exec" },
+            { id: 8, label: "ResearchGate", icon: "🔗", color: "teal", url: "" },
+            { id: 9, label: "ScienceDirect", icon: "📰", color: "orange", url: "" },
+            { id: 10, label: "NCBI BLAST", icon: "🧪", color: "indigo", url: "" },
+            { id: 11, label: "ATCC", icon: "🦠", color: "pink", url: "" },
+            { id: 12, label: "UniProt", icon: "🔬", color: "lime", url: "" },
+            { id: 13, label: "KEGG Pathways", icon: "🗺️", color: "cyan", url: "" },
+            { id: 14, label: "Sigma-Aldrich", icon: "⚗️", color: "amber", url: "" },
+            { id: 15, label: "Google Drive", icon: "📁", color: "yellow", url: "" },
+            { id: 16, label: "Google Meet", icon: "📹", color: "green", url: "" },
+            { id: 17, label: "Zoom", icon: "🎥", color: "blue", url: "" },
+            { id: 18, label: "Overleaf (LaTeX)", icon: "✍️", color: "red", url: "" },
+            { id: 19, label: "Button 19", icon: "🔧", color: "gray", url: "" },
+            { id: 20, label: "Button 20", icon: "🔧", color: "gray", url: "" },
+        ];
 
-    <!-- shown only when every button has no URL -->
-    <div id="empty-msg" class="hidden flex-col items-center justify-center py-24 text-center">
-      <div class="text-6xl mb-4">🔗</div>
-      <p class="text-lg font-semibold text-gray-400 dark:text-gray-500">No buttons configured yet</p>
-      <p class="text-sm text-gray-400 dark:text-gray-600 mt-1">Fill in a URL in the BUTTONS list to show it here.</p>
-    </div>
-  </main>
+        // ── DOM refs ──
+        const grid = document.getElementById('btn-grid');
+        const emptyMsg = document.getElementById('empty-msg');
+        const connStatus = document.getElementById('conn-status');
+        const statusDot = document.getElementById('status-dot');
 
-  <footer class="text-center text-xs text-gray-400 dark:text-gray-600 py-6">
-    Microbiology Department &nbsp;·&nbsp; Thank you for visiting our website. We sincerely appreciate your interest and welcome the opportunity to serve you.
-  </footer>
+        // ── Render buttons ──
+        function render() {
+            let visible = 0;
+            grid.innerHTML = '';
 
-<!-- ═══════════════════════════════════════════════════════════
-     ✏️  EDIT YOUR 20 BUTTONS HERE
-       url: ""            →  button is AUTO-HIDDEN
-       url: "https://…"  →  button SHOWS & opens on click
-     ═══════════════════════════════════════════════════════════ -->
-<script>
-const BUTTONS = [
-  { id:1,  label:"University Portal",   icon:"🎓", color:"blue",    url:"" },
-  { id:2,  label:"Department Website",  icon:"🧫", color:"emerald", url:"" },
-  { id:3,  label:"Student LMS",         icon:"📚", color:"purple",  url:"" },
-  { id:4,  label:"Email / Webmail",     icon:"📧", color:"red",     url:"" },
-  { id:5,  label:"Micro LIS",       icon:"📄", color:"sky",     url:"https://microbiologycchrc.github.io/sec-1/" },
-  { id:6,  label:"Microbiology Dept Laboratory Portal",      icon:"🎓", color:"yellow",  url:"https://microbiologycchrc.github.io/sec-2/" },
-  { id:7,  label:"ASM Journals",        icon:"🧬", color:"green",   url:"" },
-  { id:8,  label:"ResearchGate",        icon:"🔗", color:"teal",    url:"" },
-  { id:9,  label:"ScienceDirect",       icon:"📰", color:"orange",  url:"" },
-  { id:10, label:"NCBI BLAST",          icon:"🧪", color:"indigo",  url:"" },
-  { id:11, label:"ATCC",                icon:"🦠", color:"pink",    url:"" },
-  { id:12, label:"UniProt",             icon:"🔬", color:"lime",    url:"" },
-  { id:13, label:"KEGG Pathways",       icon:"🗺️", color:"cyan",    url:"" },
-  { id:14, label:"Sigma-Aldrich",       icon:"⚗️", color:"amber",   url:"" },
-  { id:15, label:"Google Drive",        icon:"📁", color:"yellow",  url:"" },
-  { id:16, label:"Google Meet",         icon:"📹", color:"green",   url:"" },
-  { id:17, label:"Zoom",                icon:"🎥", color:"blue",    url:"" },
-  { id:18, label:"Overleaf (LaTeX)",    icon:"✍️", color:"red",     url:"" },
-  { id:19, label:"Button 19",           icon:"🔧", color:"gray",    url:"" },
-  { id:20, label:"Button 20",           icon:"🔧", color:"gray",    url:"" },
-];
+            BUTTONS.forEach(b => {
+                const u = (b.url || '').trim();
+                if (!u) return;
 
-// ── colour map ────────────────────────────────────────────────
-const COLOR = {
-  blue:    "bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300",
-  emerald: "bg-emerald-100 dark:bg-emerald-900 text-emerald-600 dark:text-emerald-300",
-  purple:  "bg-purple-100 dark:bg-purple-900 text-purple-600 dark:text-purple-300",
-  red:     "bg-red-100 dark:bg-red-900 text-red-600 dark:text-red-300",
-  sky:     "bg-sky-100 dark:bg-sky-900 text-sky-600 dark:text-sky-300",
-  yellow:  "bg-yellow-100 dark:bg-yellow-900 text-yellow-600 dark:text-yellow-300",
-  green:   "bg-green-100 dark:bg-green-900 text-green-600 dark:text-green-300",
-  teal:    "bg-teal-100 dark:bg-teal-900 text-teal-600 dark:text-teal-300",
-  orange:  "bg-orange-100 dark:bg-orange-900 text-orange-600 dark:text-orange-300",
-  indigo:  "bg-indigo-100 dark:bg-indigo-900 text-indigo-600 dark:text-indigo-300",
-  pink:    "bg-pink-100 dark:bg-pink-900 text-pink-600 dark:text-pink-300",
-  lime:    "bg-lime-100 dark:bg-lime-900 text-lime-600 dark:text-lime-300",
-  cyan:    "bg-cyan-100 dark:bg-cyan-900 text-cyan-600 dark:text-cyan-300",
-  amber:   "bg-amber-100 dark:bg-amber-900 text-amber-600 dark:text-amber-300",
-  gray:    "bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400",
-};
+                visible++;
+                const btn = document.createElement('button');
+                btn.className = 'btn-card';
+                btn.title = b.label + ' (opens in this tab)';
+                btn.dataset.url = u;
 
-// ── Render ────────────────────────────────────────────────────
-function render() {
-  const grid     = document.getElementById('btn-grid');
-  const emptyMsg = document.getElementById('empty-msg');
-  let visible    = 0;
+                const iconClass = 'bg-' + (b.color || 'gray');
+                btn.innerHTML = `
+                    <div class="btn-icon ${iconClass}">${b.icon}</div>
+                    <div class="btn-label">${b.label}</div>
+                    <span class="url-status" title="URL active"></span>
+                `;
 
-  BUTTONS.forEach(b => {
-    if (!b.url || !b.url.trim()) return; // auto-hide
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    // Load URL in same tab
+                    window.location.href = u;
+                });
 
-    visible++;
-    const btn = document.createElement('button');
-    btn.className = 'btn-card';
-    btn.title     = b.label;
-    btn.onclick   = () => { window.location.href = b.url; };
-    btn.innerHTML = `
-      <div class="btn-icon ${COLOR[b.color] || COLOR.gray}">${b.icon}</div>
-      <div class="btn-label">${b.label}</div>`;
-    grid.appendChild(btn);
-  });
+                grid.appendChild(btn);
+            });
 
-  if (visible === 0) {
-    emptyMsg.classList.remove('hidden');
-    emptyMsg.classList.add('flex');
-  }
-}
+            if (visible === 0) {
+                emptyMsg.style.display = 'flex';
+                grid.style.display = 'none';
+            } else {
+                emptyMsg.style.display = 'none';
+                grid.style.display = 'flex';
+            }
 
-// ── Dark mode ─────────────────────────────────────────────────
-function toggleDark() {
-  const html = document.documentElement;
-  const icon = document.getElementById('dark-icon');
-  if (html.classList.contains('dark')) {
-    html.classList.remove('dark'); localStorage.theme = 'light'; icon.textContent = '🌙';
-  } else {
-    html.classList.add('dark');   localStorage.theme = 'dark';  icon.textContent = '☀️';
-  }
-}
+            // Update status (all buttons are "live" because they have URLs)
+            connStatus.textContent = 'Live';
+            statusDot.className = 'dot';
+            statusDot.style.background = '#22c55e';
+        }
 
-// ── Clock ─────────────────────────────────────────────────────
-(function tick() {
-  const el = document.getElementById('clock');
-  if (el) el.textContent = new Date().toLocaleTimeString([], { hour:'2-digit', minute:'2-digit', second:'2-digit' });
-  setTimeout(tick, 1000);
-})();
+        // ── Dark mode toggle ──
+        function toggleDark() {
+            const html = document.documentElement;
+            const icon = document.getElementById('dark-icon');
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+                icon.textContent = '🌙';
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+                icon.textContent = '☀️';
+            }
+            drawClock();
+        }
 
-// ── Init ──────────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded', () => {
-  if (document.documentElement.classList.contains('dark'))
-    document.getElementById('dark-icon').textContent = '☀️';
-  render();
-});
-</script>
+        // ── FLOATING ANALOG CLOCK ──
+        function drawClock() {
+            const canvas = document.getElementById('analog-canvas');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+            const size = canvas.width;
+            const radius = size / 2;
+            const cx = radius;
+            const cy = radius;
+
+            ctx.clearRect(0, 0, size, size);
+
+            const isDark = document.documentElement.classList.contains('dark');
+
+            // Outer ring
+            ctx.beginPath();
+            ctx.arc(cx, cy, radius - 2, 0, 2 * Math.PI);
+            ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.06)';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            const now = new Date();
+            const hours = now.getHours() % 12;
+            const minutes = now.getMinutes();
+            const seconds = now.getSeconds();
+
+            // Hour ticks
+            for (let i = 0; i < 12; i++) {
+                const angle = (i / 12) * 2 * Math.PI - Math.PI / 2;
+                const inner = radius - 12;
+                const outer = radius - 3;
+                const x1 = cx + inner * Math.cos(angle);
+                const y1 = cy + inner * Math.sin(angle);
+                const x2 = cx + outer * Math.cos(angle);
+                const y2 = cy + outer * Math.sin(angle);
+                ctx.beginPath();
+                ctx.moveTo(x1, y1);
+                ctx.lineTo(x2, y2);
+                ctx.strokeStyle = isDark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.4)';
+                ctx.lineWidth = i % 3 === 0 ? 2.5 : 1.2;
+                ctx.stroke();
+            }
+
+            // Hour hand
+            const hAngle = (hours / 12) * 2 * Math.PI + (minutes / 60) * (2 * Math.PI / 12) - Math.PI / 2;
+            const hLen = radius * 0.45;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + hLen * Math.cos(hAngle), cy + hLen * Math.sin(hAngle));
+            ctx.strokeStyle = isDark ? '#e2e8f0' : '#1e293b';
+            ctx.lineWidth = 4.5;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+
+            // Minute hand
+            const mAngle = (minutes / 60) * 2 * Math.PI + (seconds / 60) * (2 * Math.PI / 60) - Math.PI / 2;
+            const mLen = radius * 0.6;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + mLen * Math.cos(mAngle), cy + mLen * Math.sin(mAngle));
+            ctx.strokeStyle = isDark ? '#cbd5e1' : '#334155';
+            ctx.lineWidth = 3;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+
+            // Second hand (emerald accent)
+            const sAngle = (seconds / 60) * 2 * Math.PI - Math.PI / 2;
+            const sLen = radius * 0.65;
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(cx + sLen * Math.cos(sAngle), cy + sLen * Math.sin(sAngle));
+            ctx.strokeStyle = '#059669';
+            ctx.lineWidth = 2;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+
+            // Center dot
+            ctx.beginPath();
+            ctx.arc(cx, cy, 4.5, 0, 2 * Math.PI);
+            ctx.fillStyle = isDark ? '#f1f5f9' : '#0f172a';
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(cx, cy, 2, 0, 2 * Math.PI);
+            ctx.fillStyle = '#059669';
+            ctx.fill();
+        }
+
+        let clockInterval;
+
+        function startClock() {
+            drawClock();
+            if (clockInterval) clearInterval(clockInterval);
+            clockInterval = setInterval(drawClock, 1000);
+        }
+
+        // ── Init ──
+        window.addEventListener('DOMContentLoaded', () => {
+            if (document.documentElement.classList.contains('dark')) {
+                document.getElementById('dark-icon').textContent = '☀️';
+            }
+            render();
+            startClock();
+        });
+
+        // ── Expose ──
+        window.toggleDark = toggleDark;
+    </script>
+
 </body>
 </html>
